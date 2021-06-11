@@ -5,7 +5,7 @@
  const marked = require('marked')
  fs.watchFile('../md/note.md',(curr,prev)=>{
      //读取准备好的html模板文件
-     fs.readFile('../html/template.html','utf8',(err,template)=>{
+     fs.readFile('../template/template.html','utf8',(err,template)=>{
          if(err){
              throw err
          }else{
