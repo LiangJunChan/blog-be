@@ -1,32 +1,42 @@
 /**
- * Created by liyinghao on 2016/11/8.
+ * Created by ChenLiangjun on 2021/06/21.
  */
- const fs = require('fs')
- const marked = require('marked')
- fs.watchFile('../md/note.md',(curr,prev)=>{
-     //读取准备好的html模板文件
-     fs.readFile('../template/template.html','utf8',(err,template)=>{
-         if(err){
-             throw err
-         }else{
-             fs.readFile('../md/note.md','utf8',(err,markContent)=>{
-                 if(err){
-                     throw err
-                 }else{
-                     //转化好的html字符串
-                     let htmlStr = marked(markContent.toString());
-                     //将html模板文件中的'@markdown' 替换为 html字符串
-                     template = template.replace(/markdown/g, htmlStr)
-                     //将新生成的字符串template重新写入到文件中
-                     fs.writeFile('../html/a_1.html',template,err=>{
-                         if(err){
-                             throw err
-                         }else{
-                             console.log("success");
-                         }
-                     })
-                 }
-             })
-         }
-     })
- });
+const fs = require("fs")
+const marked = require("marked")
+
+const rootPath = `${__dirname}/..`
+
+let fileList = fs.readdirSync(`${rootPath}/md`)
+fileList.forEach(v => {
+  let file = v.substring(0, v.lastIndexOf('.'))
+  let filePath = `${rootPath}/md/${v}`
+  fs.readFile(filePath, "utf8", (err, markContent) => {
+    if (err) {
+      throw err
+    } else {
+      //转化好的html字符串
+      let htmlStr = marked(markContent.toString())
+      fs.readFile(`${rootPath}/template/template.html`, "utf8", (err, template) => {
+        if (err) {
+          throw err
+        } else {
+          const htmlData = template.replace(/@markdown/g, htmlStr)
+          let htmlPath
+          if (file.match(/\d/)) {
+            htmlPath = `${rootPath}/algorithm/${file}.html`
+          } else {
+            htmlPath = `${rootPath}/html/${file}.html`
+          }
+          //将新生成的字符串template重新写入到文件中
+          fs.writeFile(htmlPath, htmlData, (err) => {
+            if (err) {
+              throw err
+            } else {
+              console.log(`${file}.html write success`)
+            }
+          })
+        }
+      })
+    }
+  })
+})

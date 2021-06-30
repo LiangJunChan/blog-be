@@ -2,10 +2,11 @@
   "name": "blog-be",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "build": "node func/md_to_html.js",
+    "start": "node func/md_to_html.js && nodemon app.js"
   },
   "author": "ChenLiangjun",
   "license": "ISC",

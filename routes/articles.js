@@ -1,5 +1,5 @@
 module.exports = {
-  list: async ctx => {
+  get: async ctx => {
     const titles = [
       'Alipay',
       'Angular',
