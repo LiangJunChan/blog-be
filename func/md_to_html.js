@@ -22,7 +22,7 @@ fileList.forEach(v => {
         } else {
           const htmlData = template.replace(/@markdown/g, htmlStr)
           let htmlPath
-          if (file.match(/\d/)) {
+          if (file.match(/^\d/)) {
             htmlPath = `${rootPath}/algorithm/${file}.html`
           } else {
             htmlPath = `${rootPath}/html/${file}.html`
