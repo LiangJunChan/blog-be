@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>Document</title>
+</head>
+<style>
+  /* pre {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    background: #f0f0f0;
+    line-height: 20px;
+    background: url('https://www.shejidaren.com/examples/pre-style/pre-bg.gif') repeat-y left top;
+    width: 1000px;
+    overflow: auto;
+    overflow-Y: hidden;
+  }
+  pre code {
+    margin: 0 0 0 40px;
+    padding: 0 0 20px 0;
+    display: block;
+  }
+  .md img {
+    width: 400px;
+  } */
+  
+</style>
+<body>
+  <div class="md">
+    <blockquote>
+<p>题目：<a href="https://leetcode-cn.com/problems/linked-list-cycle">https://leetcode-cn.com/problems/linked-list-cycle</a></p>
+<p>给定一个链表，判断链表中是否有环。</p>
+<p>如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意：pos 不作为参数进行传递，仅仅是为了标识链表的实际情况。</p>
+<p>如果链表中存在环，则返回 true 。 否则，返回 false 。</p>
+<p>进阶：</p>
+</blockquote>
+<blockquote>
+<p>你能用 O(1)（即，常量）内存解决此问题吗？</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/12691802/1624287632408-b0c8c5de-80c1-4b0e-b75a-56ae0f83b631.png" alt="image.png"></p>
+<h2 id="暴力解法（仅用于leetcode做题）">暴力解法（仅用于leetcode做题）</h2>
+<p>设定一个时间，比如在0.5s内，如果一个个找下去没有遇到空，则不是环</p>
+<pre><code>/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+    let time = Date.now()
+    while(head) {
+      if(Date.now() - time ===500) return true
+      head = head.next
+    }
+    return false
+};
+</code></pre>
+<h2 id="setmap">Set/Map</h2>
+<p>用一个Set或者Map每走一步作记录,走到最后如果记录中没有，则false，有的话则true</p>
+<pre><code>var hasCycle = function(head) {
+  if(!head || !head.next) return false
+  let set = new Set()
+  while(head) {
+    if(set.has(head)) return true
+    set.add(head)
+    head = head.next
+  }
+  return false
+};
+</code></pre>
+<h2 id="快慢指针（龟兔赛跑）">快慢指针（龟兔赛跑）</h2>
+<pre><code>var hasCycle = function(head) {
+  let fast = head
+  let slow = head
+  while(slow &amp;&amp; fast &amp;&amp; fast.next) {
+    slow = slow.next
+    fast = fast.next.next
+    if(slow === fast) return true
+  }
+  return false
+};
+</code></pre>
+<pre><code># Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def hasCycle(self, head):
+        &quot;&quot;&quot;
+        :type head: ListNode
+        :rtype: bool
+        &quot;&quot;&quot;
+        slow = fast = head
+        while slow and fast and fast.next:
+          slow = slow.next
+          fast = fast.next.next
+          if slow == fast:
+            return True
+        return False
+</code></pre>
+
+  </div>
+</body>
+</html>
